@@ -15,7 +15,7 @@ namespace RazorPagesSimpleLogin.Configurations
                 {
                     cookieOptions.LoginPath = "/Account/Login";
                     cookieOptions.AccessDeniedPath = "/Account/AccessDenied";
-                    cookieOptions.ExpireTimeSpan = new TimeSpan(0, 1, 0);
+                    cookieOptions.ExpireTimeSpan = new TimeSpan.FromMinutes(60);
                 });
 
             services.AddAuthorization(options =>
