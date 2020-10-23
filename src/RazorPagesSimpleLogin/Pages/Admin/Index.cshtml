@@ -1,0 +1,7 @@
+﻿@page
+@model RazorPagesSimpleLogin.Pages.Admin.IndexModel
+@{
+}
+
+    <h1>Admin, @HttpContext.User.Identity.Name</h1>
+    <a asp-page="/Account/Logout">Logout</a>
