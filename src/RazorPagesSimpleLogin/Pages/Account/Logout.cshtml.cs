@@ -14,7 +14,7 @@ namespace RazorPagesSimpleLogin.Pages.Account
         public async Task<IActionResult> OnGet()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToPage("/Index");
+            return LocalRedirect("/");
         }
     }
 }
