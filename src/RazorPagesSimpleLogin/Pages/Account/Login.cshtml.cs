@@ -15,23 +15,27 @@ namespace RazorPagesSimpleLogin.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        [BindProperty]
-        public Login Login { get; set; }
+        [BindProperty, Required, EmailAddress]
+        public string Email { get; set; }
+        
+        [BindProperty, Required, PasswordPropertyText(true)]
+        public string Password { get; set; }
 
-        public string Message { get; set; }
         public async Task<IActionResult> OnPost(string returnUrl)
         {
-            var loginAtual = new Login { Email = "rmc@email.com", Password = "123" };
+            if (!ModelState.IsValid) return Page();
 
-            //if (!loginAtual.Email.Equals(Login.Email) || !loginAtual.Password.Equals(Login.Password))
-            //{
-            //    Message = "Invalid credentials";
-            //    return Page();
-            //}
+            var loginAtual = new { Email = "rmc@email.com", Password = "123" };
+
+            if (!loginAtual.Email.Equals(Email) || !loginAtual.Password.Equals(Password))
+            {
+                ModelState.AddModelError(string.Empty, "Credenciais Inválidas!");
+                return Page();
+            }
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, Login.Email),
+                new Claim(ClaimTypes.Name, Email),
                 new Claim(ClaimTypes.Role, "Admin")
             };
 
@@ -39,13 +43,9 @@ namespace RazorPagesSimpleLogin.Pages.Account
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
             if (string.IsNullOrWhiteSpace(returnUrl))
-                return RedirectToPage("/Index");
+                return LocalRedirect("/");
 
-            var urlParts = returnUrl.Split('/');
-            if (urlParts.Count() <= 2)
-                return RedirectToPage($"{returnUrl}/Index");
-
-            return RedirectToPage(returnUrl);
+            return LocalRedirect(returnUrl);
         }
     }
 
