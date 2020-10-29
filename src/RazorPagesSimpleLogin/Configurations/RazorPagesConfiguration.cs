@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RazorPagesSimpleLogin.Extensions;
 
 namespace RazorPagesSimpleLogin.Configurations
 {
@@ -44,6 +45,10 @@ namespace RazorPagesSimpleLogin.Configurations
 
             app.UseRouting();
             app.UseIdentityConfiguration(env);
+
+            if (!env.IsDevelopment())
+                app.UseMiddleware<ExceptionMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

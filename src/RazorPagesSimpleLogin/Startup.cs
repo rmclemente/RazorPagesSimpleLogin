@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RazorPagesSimpleLogin.Configurations;
+using RazorPagesSimpleLogin.Pages.Admin;
+using System;
 
 namespace RazorPagesSimpleLogin
 {
@@ -31,7 +33,12 @@ namespace RazorPagesSimpleLogin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityConfiguration();
-            services.AddHttpClient();
+            services.AddHttpClient<SetupModel>(c =>
+            {
+                c.BaseAddress = new Uri("https://api.github.com/");
+                c.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
+                c.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactory-Sample");
+            });
             services.AddRazorPagesConfiguration();
         }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -13,9 +14,11 @@ namespace RazorPagesSimpleLogin.Configurations
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(cookieOptions =>
                 {
+                    cookieOptions.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                    cookieOptions.Cookie.HttpOnly = true;
                     cookieOptions.LoginPath = "/Account/Login";
                     cookieOptions.AccessDeniedPath = "/Account/AccessDenied";
-                    cookieOptions.ExpireTimeSpan = new TimeSpan.FromMinutes(60);
+                    cookieOptions.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                 });
 
             services.AddAuthorization(options =>

@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace RazorPagesSimpleLogin.Pages.Account
 {
@@ -17,7 +14,7 @@ namespace RazorPagesSimpleLogin.Pages.Account
     {
         [BindProperty, Required, EmailAddress]
         public string Email { get; set; }
-        
+
         [BindProperty, Required, PasswordPropertyText(true)]
         public string Password { get; set; }
 
@@ -29,7 +26,7 @@ namespace RazorPagesSimpleLogin.Pages.Account
 
             if (!loginAtual.Email.Equals(Email) || !loginAtual.Password.Equals(Password))
             {
-                ModelState.AddModelError(string.Empty, "Credenciais Inv√°lidas!");
+                ModelState.AddModelError(string.Empty, "Credenciais Inv·lidas!");
                 return Page();
             }
 
@@ -47,11 +44,5 @@ namespace RazorPagesSimpleLogin.Pages.Account
 
             return LocalRedirect(returnUrl);
         }
-    }
-
-    public class Login
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
     }
 }
